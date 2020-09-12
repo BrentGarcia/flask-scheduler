@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="content">
-    <h1 style='text-align: center'>Task Master</h1>
+    <h1 style='text-align: center'>First 10 Minutes</h1>
     {% if tasks|length < 1 %}
         <h4 style='text-align: center'>There are no tasks. Create one below!</h4>
     {% else %}
@@ -15,6 +15,7 @@
             <th>Task</th>
             <th>Added</th>
             <th>Actions</th>
+            <th>Completed</th>
         </tr>
         {% for task in tasks %}
             <tr>
@@ -23,6 +24,9 @@
                 <td>
                     <a href="/delete/{{task.id}}">Delete</a>
                     <a href="/update/{{task.id}}">Update</a>
+                </td>
+                <td>
+                    <input type="checkbox" name="completed" id="completed">
                 </td>
             </tr>
         {% endfor %}
@@ -34,5 +38,18 @@
             <input type="submit" value='Add Task'>
         </form>
     </div>
+    
+    <div class="timer">
+        <p id="time"></p>
+    </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='timer.js') }}"></script>
+<script>
+  var Seconds = {{ num }};
+</script>
+
 {% endblock %}

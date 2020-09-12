@@ -30,7 +30,13 @@ def index():
             return 'There was an issue adding your task'
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasks=tasks)
+        # return render_template('index.html', tasks=tasks, num=25*60)
+        return redirect(url_for('timer', num=10*60))
+
+@app.route('/<int:num>s')
+@app.route('/<int:num>')
+def timer(num):
+    return render_template('index.html', num=num)
 
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -40,7 +46,7 @@ def delete(id):
         db.session.delete(task_to_delete)
         db.session.commit()
         return redirect('/')
-    except:
+    except: 
         return 'There was a problem deleting that task'
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
